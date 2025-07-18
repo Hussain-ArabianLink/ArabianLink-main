@@ -4,6 +4,8 @@
   "private": true,
   "dependencies": {
     "@headlessui/react": "^2.2.4",
+    "@stagewise-plugins/react": "^0.6.1",
+    "@stagewise/toolbar-react": "^0.6.1",
     "@supabase/supabase-js": "^2.51.0",
     "axios": "^1.8.4",
     "clsx": "^2.1.1",
