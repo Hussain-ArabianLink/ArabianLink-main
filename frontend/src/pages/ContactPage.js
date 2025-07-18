@@ -13,6 +13,7 @@ import {
   Wrench,
   FileText
 } from 'lucide-react';
+import api from '../api';
 
 const ContactPage = () => {
   const [formData, setFormData] = useState({
@@ -98,11 +99,14 @@ const ContactPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setSubmitStatus(null);
     
-    // Simulate form submission
     try {
-      await new Promise(resolve => setTimeout(resolve, 2000));
+      // Send the form data to the backend
+      await api.post('/contact', formData);
+
       setSubmitStatus('success');
+      // Reset form on success
       setFormData({
         name: '',
         email: '',
@@ -113,6 +117,7 @@ const ContactPage = () => {
         urgency: 'normal'
       });
     } catch (error) {
+      console.error("Failed to submit contact form:", error);
       setSubmitStatus('error');
     } finally {
       setIsSubmitting(false);
