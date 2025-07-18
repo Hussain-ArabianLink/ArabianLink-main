@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "@stagewise-plugins/react": "^0.6.1",
+    "@stagewise/toolbar-react": "^0.6.1"
+  },
+  "devDependencies": {
+    "@types/react": "^19.1.8"
+  }
+}
