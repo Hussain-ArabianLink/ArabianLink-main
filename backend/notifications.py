@@ -18,12 +18,21 @@ SMTP_PASSWORD = os.getenv("SMTP_PASSWORD")
 RECIPIENT_EMAIL = os.getenv("RECIPIENT_EMAIL")
 
 
-async def send_notifications(name: str, email: str, message: str):
+async def send_notifications(form_data: dict):
     """
     Sends notifications to Slack, Telegram, and email if configured.
     """
-    # Create the notification message text
-    text = f"New contact form submission:\nName: {name}\nEmail: {email}\nMessage: {message}"
+    # Create the notification message text with all form details
+    text = (
+        f"New contact form submission:\n"
+        f"Name: {form_data.get('name')}\n"
+        f"Email: {form_data.get('email')}\n"
+        f"Phone: {form_data.get('phone')}\n"
+        f"Company: {form_data.get('company', 'N/A')}\n"
+        f"Service: {form_data.get('service')}\n"
+        f"Urgency: {form_data.get('urgency')}\n"
+        f"Message: {form_data.get('message')}"
+    )
 
     async with httpx.AsyncClient() as client:
         # Send Slack notification only if the URL is valid

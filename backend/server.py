@@ -54,8 +54,9 @@ async def contact(form: ContactForm):
     """
     Receives contact form data, saves it to MongoDB, and sends notifications.
     """
-    await db.contact_submissions.insert_one(form.dict())
-    await send_notifications(form.name, form.email, form.message)
+    form_dict = form.dict()
+    await db.contact_submissions.insert_one(form_dict)
+    await send_notifications(form_dict)
     return {"message": "Form submitted successfully"}
 
 @app.get("/")
