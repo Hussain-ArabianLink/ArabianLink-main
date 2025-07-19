@@ -52,7 +52,7 @@ class ContactForm(BaseModel):
     message: str
     urgency: str
 
-@app.post("/contact")
+@app.post("/api/contact")
 async def contact(form: ContactForm):
     """
     Receives contact form data, saves it to MongoDB, and sends notifications.
