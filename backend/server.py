@@ -1,93 +1,63 @@
-from fastapi import FastAPI, APIRouter
-from dotenv import load_dotenv
-from starlette.middleware.cors import CORSMiddleware
-from motor.motor_asyncio import AsyncIOMotorClient
+
 import os
-import logging
 from pathlib import Path
-from pydantic import BaseModel, Field
-from typing import List
-import uuid
-from datetime import datetime
-from contextlib import asynccontextmanager
+from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel
+from motor.motor_asyncio import AsyncIOMotorClient
+from dotenv import load_dotenv
 
+try:
+    from .notifications import send_notifications
+except ImportError:
+    from notifications import send_notifications
 
-ROOT_DIR = Path(__file__).parent
-load_dotenv(ROOT_DIR / '.env')
+# Explicitly load .env file from the backend directory
+env_path = Path(__file__).parent / '.env'
+load_dotenv(dotenv_path=env_path)
 
-# MongoDB connection
-mongo_url = os.environ['MONGO_URL']
-client = AsyncIOMotorClient(mongo_url)
-db = client[os.environ['DB_NAME']]
+app = FastAPI()
 
-@asynccontextmanager
-async def lifespan(app: FastAPI):
-    # Startup: connections, etc
-    yield
-    # Shutdown: close connections
-    client.close()
+# CORS Middleware
+origins = [
+    "http://localhost:3000",
+    "http://localhost:3001",
+    # Add your Vercel frontend URL here for production
+    # "https://your-frontend-domain.vercel.app",
+]
 
-# Create the main app without a prefix
-app = FastAPI(lifespan=lifespan)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
-# Create a router with the /api prefix
-api_router = APIRouter(prefix="/api")
+MONGO_URI = os.getenv("MONGO_URL")
+DB_NAME = os.getenv("DB_NAME")
 
-
-# Define Models
-class StatusCheck(BaseModel):
-    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
-    client_name: str
-    timestamp: datetime = Field(default_factory=datetime.utcnow)
-
-class StatusCheckCreate(BaseModel):
-    client_name: str
+client = AsyncIOMotorClient(MONGO_URI)
+db = client[DB_NAME]
 
 class ContactForm(BaseModel):
     name: str
     email: str
     phone: str
-    company: str
+    company: str | None = None
     service: str
     message: str
     urgency: str
 
-# Add your routes to the router instead of directly to app
-@api_router.get("/")
-async def root():
-    return {"message": "Hello World"}
+@app.post("/contact")
+async def contact(form: ContactForm):
+    """
+    Receives contact form data, saves it to MongoDB, and sends notifications.
+    """
+    await db.contact_submissions.insert_one(form.dict())
+    await send_notifications(form.name, form.email, form.message)
+    return {"message": "Form submitted successfully"}
 
-@api_router.post("/status", response_model=StatusCheck)
-async def create_status_check(input: StatusCheckCreate):
-    status_dict = input.dict()
-    status_obj = StatusCheck(**status_dict)
-    _ = await db.status_checks.insert_one(status_obj.dict())
-    return status_obj
-
-@api_router.get("/status", response_model=List[StatusCheck])
-async def get_status_checks():
-    status_checks = await db.status_checks.find().to_list(1000)
-    return [StatusCheck(**status_check) for status_check in status_checks]
-
-@api_router.post("/contact", status_code=201)
-async def create_contact_submission(submission: ContactForm):
-    await db.contact_submissions.insert_one(submission.dict())
-    return {"message": "Contact form submitted successfully"}
-
-# Include the router in the main app
-app.include_router(api_router)
-
-app.add_middleware(
-    CORSMiddleware,
-    allow_credentials=True,
-    allow_origins=["*"],
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
-
-# Configure logging
-logging.basicConfig(
-    level=logging.INFO,
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
-)
-logger = logging.getLogger(__name__)
+@app.get("/")
+async def read_root():
+    return {"message": "Welcome to the ArabianLink API"}
