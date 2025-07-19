@@ -22,9 +22,12 @@ app = FastAPI()
 origins = [
     "http://localhost:3000",
     "http://localhost:3001",
-    # Add your Vercel frontend URL here for production
-    # "https://your-frontend-domain.vercel.app",
 ]
+
+# Add the production frontend URL from an environment variable if it exists
+FRONTEND_URL = os.getenv("FRONTEND_URL")
+if FRONTEND_URL:
+    origins.append(FRONTEND_URL)
 
 app.add_middleware(
     CORSMiddleware,
