@@ -146,11 +146,11 @@ const Layout = ({ children }) => {
               <div className="flex space-x-4">
                 <div className="flex items-center text-sm text-gray-300">
                   <Phone size={16} className="mr-2 text-blue-400" />
-                  +91 XXX XXX XXXX
+                  +971 50 494 6149
                 </div>
                 <div className="flex items-center text-sm text-gray-300">
                   <Mail size={16} className="mr-2 text-blue-400" />
-                  info@arabianlinkdoors.com
+                  arabianlinkdoors@gmail.com
                 </div>
               </div>
             </div>

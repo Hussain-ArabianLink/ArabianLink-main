@@ -34,7 +34,7 @@ const HomePage = () => {
     {
       icon: Award,
       title: 'Certified Excellence',
-      description: 'ISO certified with proven track record across India and Middle East'
+      description: 'certified with proven track record across India and Middle East'
     }
   ];
 
@@ -59,7 +59,7 @@ const HomePage = () => {
   const testimonials = [
     {
       name: 'Rajesh Kumar',
-      company: 'Delhi Metro Rail Corporation',
+      company: 'Metro Rail Corporation',
       rating: 5,
       text: 'Exceptional quality and reliability. Arabian Link Doors has been our trusted partner for all metro station installations.'
     },
@@ -71,7 +71,7 @@ const HomePage = () => {
     },
     {
       name: 'Dr. Priya Sharma',
-      company: 'Apollo Hospitals',
+      company: 'Aster Hospitals',
       rating: 5,
       text: 'Perfect hermetic door solutions for our operation theaters. Outstanding quality and prompt service.'
     }
