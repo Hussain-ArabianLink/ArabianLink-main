@@ -30,6 +30,19 @@ const Layout = ({ children }) => {
     }
   });
 
+  // Scroll to top on page change
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
+
+  const handleNavClick = (path) => {
+    if (location.pathname === path) {
+      window.scrollTo(0, 0);
+    }
+    // This will also close the mobile menu on any link click
+    setIsMenuOpen(false);
+  };
+
   const navigation = [
     { name: 'Home', href: '/' },
     { name: 'Products', href: '/products' },
@@ -47,7 +60,7 @@ const Layout = ({ children }) => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             {/* Logo */}
-            <Link to="/" className="flex items-center space-x-3">
+            <Link to="/" className="flex items-center space-x-3" onClick={() => handleNavClick('/')}>
               <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center">
                 <span className="text-white font-bold text-lg">AL</span>
               </div>
@@ -63,6 +76,7 @@ const Layout = ({ children }) => {
                 <Link
                   key={item.name}
                   to={item.href}
+                  onClick={() => handleNavClick(item.href)}
                   className={`text-sm font-medium transition-colors duration-200 ${
                     isActive(item.href)
                       ? 'text-blue-600'
@@ -72,9 +86,9 @@ const Layout = ({ children }) => {
                   {item.name}
                 </Link>
               ))}
-              <button className="bg-gradient-to-r from-blue-600 to-blue-700 text-white px-6 py-2 rounded-lg text-sm font-medium hover:from-blue-700 hover:to-blue-800 transition-all duration-200 shadow-lg hover:shadow-xl">
+              <Link to="/contact" onClick={() => handleNavClick('/contact')} className="bg-gradient-to-r from-blue-600 to-blue-700 text-white px-6 py-2 rounded-lg text-sm font-medium hover:from-blue-700 hover:to-blue-800 transition-all duration-200 shadow-lg hover:shadow-xl">
                 Get Quote
-              </button>
+              </Link>
             </nav>
 
             {/* Mobile menu button */}
@@ -100,7 +114,7 @@ const Layout = ({ children }) => {
                 <Link
                   key={item.name}
                   to={item.href}
-                  onClick={() => setIsMenuOpen(false)}
+                  onClick={() => handleNavClick(item.href)}
                   className={`block text-base font-medium transition-colors duration-200 ${
                     isActive(item.href)
                       ? 'text-blue-600'
@@ -110,9 +124,9 @@ const Layout = ({ children }) => {
                   {item.name}
                 </Link>
               ))}
-              <button className="w-full bg-gradient-to-r from-blue-600 to-blue-700 text-white px-6 py-3 rounded-lg text-sm font-medium hover:from-blue-700 hover:to-blue-800 transition-all duration-200 mt-4">
+              <Link to="/contact" onClick={() => handleNavClick('/contact')} className="w-full block text-center bg-gradient-to-r from-blue-600 to-blue-700 text-white px-6 py-3 rounded-lg text-sm font-medium hover:from-blue-700 hover:to-blue-800 transition-all duration-200 mt-4">
                 Get Quote
-              </button>
+              </Link>
             </div>
           </motion.div>
         )}
