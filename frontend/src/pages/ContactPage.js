@@ -48,43 +48,43 @@ const ContactPage = () => {
       icon: Phone,
       title: 'Phone Numbers',
       details: [
-        { label: 'Main Office', value: '+91 XXX XXX XXXX' },
-        { label: 'Emergency', value: '+91 XXX XXX XXXX' },
-        { label: 'UAE Office', value: '+971 XX XXX XXXX' }
+        { label: 'Main Office', value: '+971 50 494 6149' },
+        { label: 'Emergency', value: '+971 54 374 6049' },
+        { label: 'India Office', value: '+91 90 80 025476' }
       ]
     },
     {
       icon: Mail,
       title: 'Email Addresses',
       details: [
-        { label: 'General Inquiries', value: 'info@arabianlinkdoors.com' },
-        { label: 'Sales', value: 'sales@arabianlinkdoors.com' },
-        { label: 'Support', value: 'support@arabianlinkdoors.com' }
+        { label: 'General Inquiries', value: 'arabianlinkdoors@gmail.com' },
+        { label: 'Sales', value: 'emiratesdoors@gmail.com' },
+        { label: 'Support', value: 'emiratesautodoors@gmail.com' }
       ]
     },
     {
       icon: MapPin,
       title: 'Office Locations',
       details: [
-        { label: 'India HQ', value: 'New Delhi, India' },
-        { label: 'Regional Office', value: 'Mumbai, India' },
-        { label: 'UAE Office', value: 'Dubai, UAE' }
+        { label: 'India HQ', value: 'Chennai, India' },
+        { label: 'Regional Office', value: 'Bangalore, India' },
+        { label: 'UAE Office', value: 'Sharjah, UAE' }
       ]
     },
     {
       icon: Clock,
       title: 'Business Hours',
       details: [
-        { label: 'Monday - Friday', value: '9:00 AM - 6:00 PM' },
-        { label: 'Saturday', value: '9:00 AM - 2:00 PM' },
+        { label: 'Monday - Friday', value: '8:00 AM - 5:00 PM' },
+        { label: 'Saturday', value: '9:00 AM - 1:00 PM' },
         { label: 'Emergency', value: '24/7 Available' }
       ]
     }
   ];
 
   const serviceAreas = [
-    'New Delhi', 'Mumbai', 'Bangalore', 'Chennai', 'Hyderabad', 'Pune',
-    'Kolkata', 'Ahmedabad', 'Surat', 'Jaipur', 'Lucknow', 'Kanpur',
+    'Ajman', 'Fujairah', 'Bangalore', 'Chennai', 'Hyderabad', 'Oman',
+    'Al Ain', 'Umm Al Quwain', 'Ras Al Khaimah', 'Japan', 'China', 'Ethiopia',
     'Dubai', 'Abu Dhabi', 'Sharjah', 'Riyadh', 'Jeddah', 'Doha'
   ];
 
@@ -484,14 +484,14 @@ const ContactPage = () => {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a 
-                href="tel:+91XXXXXXXXX" 
+                href="tel:+971 54 374 6049" 
                 className="bg-white text-red-600 px-8 py-4 rounded-lg text-lg font-semibold hover:bg-red-50 transition-all duration-200 shadow-2xl flex items-center justify-center"
               >
                 <Phone className="w-5 h-5 mr-2" />
                 Emergency Hotline
               </a>
               <a 
-                href="mailto:emergency@arabianlinkdoors.com" 
+                href="mailto:emiratesdoor@gmail.com" 
                 className="border-2 border-white text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-white hover:text-red-600 transition-all duration-200 flex items-center justify-center"
               >
                 <Mail className="w-5 h-5 mr-2" />

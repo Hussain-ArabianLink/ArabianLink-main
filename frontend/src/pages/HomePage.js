@@ -34,7 +34,7 @@ const HomePage = () => {
     {
       icon: Award,
       title: 'Certified Excellence',
-      description: 'certified with proven track record across India and Middle East'
+      description: 'Certified with proven track record across India and Middle East'
     }
   ];
 
